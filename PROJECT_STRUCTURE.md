@@ -1,0 +1,10 @@
+index.html
+products.html
+product-details.html
+cart.html
+wishlist.html
+profile.html
+orders.html
+login.html
+signup.html
+admin.html
