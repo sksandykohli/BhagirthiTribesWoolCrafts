@@ -626,21 +626,6 @@ app.post('/api/admin/login', async (req, res) => {
     }
 });
 
-// Serve index.html for root and SPA routes
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Catch-all route for SPA: serve index.html for unmatched routes
-app.get('*', (req, res) => {
-    // Only serve index.html for non-API routes
-    if (!req.path.startsWith('/api/')) {
-        res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    } else {
-        res.status(404).json({ error: 'API endpoint not found' });
-    }
-});
-
 // Get User Profile (Protected Route)
 app.get('/api/user/profile', authenticateToken, async (req, res) => {
     try {
@@ -1524,6 +1509,16 @@ app.post('/api/settings/banners', async (req, res) => {
         console.error('Error saving banners:', error);
         res.status(500).json({ message: 'Server error' });
     }
+});
+
+// SPA Root Route: Serve index.html for root path
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Catch-all for SPA: serve index.html for unmatched routes (after all API routes)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start Server
